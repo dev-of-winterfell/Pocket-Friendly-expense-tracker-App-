@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/system_neutral_background">
+
+    <!-- Filter and Search Section -->
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/filterCard"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginHorizontal="@dimen/spacing_large"-->
+<!--        android:layout_marginTop="@dimen/spacing_large"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:cardElevation="0dp"-->
+<!--        app:strokeWidth="1dp"-->
+<!--        app:strokeColor="@color/system_outline"-->
+<!--        style="@style/Widget.Material3.CardView.Outlined">-->
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/searchLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="@string/search_transactions"-->
+<!--            app:startIconDrawable="@drawable/baseline_search_24"-->
+<!--            app:endIconMode="clear_text"-->
+<!--            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/searchEditText"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:inputType="text"-->
+<!--                android:maxLines="1"/>-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+<!--    </com.google.android.material.card.MaterialCardView>-->
+
+    <!-- Tab Layout -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/transactionTabLayout"
+        style="@style/Widget.Material3.TabLayout.Secondary"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/system_primary"
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="fixed"
+        app:tabRippleColor="@color/system_primary_container"
+        app:tabSelectedTextColor="@color/system_primary"
+        app:tabTextAppearance="@style/TextAppearance.Material3.LabelLarge">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/all_transactions" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/income" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/expense" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <!-- Chips for additional filtering -->
+<!--    <HorizontalScrollView-->
+<!--        android:id="@+id/chipScrollView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/spacing_medium"-->
+<!--        android:clipToPadding="false"-->
+<!--        android:paddingHorizontal="@dimen/spacing_large"-->
+<!--        android:scrollbars="none"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/transactionTabLayout">-->
+
+<!--        <com.google.android.material.chip.ChipGroup-->
+<!--            android:id="@+id/filterChipGroup"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:singleSelection="true"-->
+<!--            app:selectionRequired="true">-->
+
+<!--            <com.google.android.material.chip.Chip-->
+<!--                android:id="@+id/chipAll"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/all_time"-->
+<!--                android:checked="true"-->
+<!--                style="@style/Widget.Material3.Chip.Filter"/>-->
+
+<!--            <com.google.android.material.chip.Chip-->
+<!--                android:id="@+id/chipToday"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/today"-->
+<!--                style="@style/Widget.Material3.Chip.Filter"/>-->
+
+<!--            <com.google.android.material.chip.Chip-->
+<!--                android:id="@+id/chipWeek"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/this_week"-->
+<!--                style="@style/Widget.Material3.Chip.Filter"/>-->
+
+<!--            <com.google.android.material.chip.Chip-->
+<!--                android:id="@+id/chipMonth"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/this_month"-->
+<!--                style="@style/Widget.Material3.Chip.Filter"/>-->
+
+<!--        </com.google.android.material.chip.ChipGroup>-->
+<!--    </HorizontalScrollView>-->
+
+    <!-- Transaction List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="@dimen/spacing_large"
+        android:paddingBottom="@dimen/spacing_large"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/transactionTabLayout"
+        tools:listitem="@layout/item_transaction" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
