@@ -24,13 +24,14 @@ interface TransactionDao {
     suspend fun getAllTransactionsList(): List<Transaction>
 
     @Query("""
-        SELECT 
-            category as categoryName,
-            CAST(SUM(amount) as DOUBLE) as totalAmount
-        FROM transactions
-        WHERE type = :type
-        GROUP BY category
-    """)
+    SELECT 
+        category as categoryName,
+        CAST(SUM(amount) as DOUBLE) as totalAmount,
+        MAX(date) as transactionDate
+    FROM transactions
+    WHERE type = :type
+    GROUP BY category
+""")
     fun getCategoryTotals(type: TransactionType): Flow<List<CategoryTotal>>
 
     @Insert

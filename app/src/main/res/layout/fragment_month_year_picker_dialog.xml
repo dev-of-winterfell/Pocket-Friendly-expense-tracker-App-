@@ -32,6 +32,20 @@
         android:layout_marginTop="16dp">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset"
+            android:backgroundTint="@color/expense_red"
+            android:textColor="@color/white"
+            style="@style/Widget.Material3.Button.TextButton"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,7 +62,6 @@
             android:textColor="@color/white"
             android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
             style="@style/Widget.Material3.Button.TonalButton"
-            android:layout_marginStart="8dp"
-           />
+            android:layout_marginStart="8dp"/>
     </LinearLayout>
 </LinearLayout>

@@ -13,13 +13,18 @@ import com.example.pocketmaster.databinding.FragmentMonthYearPickerDialogBinding
 import java.util.Calendar
 
 class MonthYearPickerDialog : DialogFragment() {
-
-    private var onDateSelected: ((Int, Int) -> Unit)? = null
     private var _binding: FragmentMonthYearPickerDialogBinding? = null
     private val binding get() = _binding!!
 
+    private var onDateSelected: ((Int, Int) -> Unit)? = null
+    private var onReset: (() -> Unit)? = null
+
     fun setOnDateSelectedListener(listener: (Int, Int) -> Unit) {
         onDateSelected = listener
+    }
+
+    fun setOnResetListener(listener: () -> Unit) {
+        onReset = listener
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -28,22 +33,19 @@ class MonthYearPickerDialog : DialogFragment() {
         val calendar = Calendar.getInstance()
 
         // Set up DatePicker
-        binding.datePicker.apply {
-            init(
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-            ) { _, _, _, _ -> }
-        }
+        binding.datePicker.init(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        ) { _, _, _, _ -> }
 
         // Hide day spinner
-        val daySpinner = binding.datePicker.findViewById<View>(
+        binding.datePicker.findViewById<View>(
             resources.getIdentifier("day", "id", "android")
-        )
-        daySpinner?.visibility = View.GONE
+        )?.visibility = View.GONE
 
-        // Set up button click listeners
-        binding.btnCancel.setOnClickListener {
+        binding.btnReset.setOnClickListener {
+            onReset?.invoke()
             dismiss()
         }
 
@@ -52,6 +54,10 @@ class MonthYearPickerDialog : DialogFragment() {
                 binding.datePicker.year,
                 binding.datePicker.month
             )
+            dismiss()
+        }
+
+        binding.btnCancel.setOnClickListener {
             dismiss()
         }
 

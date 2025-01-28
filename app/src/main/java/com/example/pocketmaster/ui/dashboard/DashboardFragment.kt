@@ -13,6 +13,7 @@ import com.example.pocketmaster.R
 import com.example.pocketmaster.data.model.DashboardState
 import com.example.pocketmaster.data.model.ExpenseCategoryData
 import com.example.pocketmaster.databinding.FragmentDashboardBinding
+import com.example.pocketmaster.ui.calander.MonthYearPickerDialog
 import com.example.pocketmaster.ui.viewmodel.FinanceViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
@@ -44,11 +45,34 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupPieChart()
-        // observeDashboardState()
+       setupMonthSelector()
         observeViewModels()
         showLoading(true)
     }
 
+    private fun setupMonthSelector() {
+        binding.btnTimeRange.setOnClickListener {
+            android.util.Log.d("DashboardFragment", "Time range button clicked")
+            showMonthPicker()
+        }
+    }
+    private fun showMonthPicker() {
+        MonthYearPickerDialog().apply {
+            setOnDateSelectedListener { year, month ->
+                android.util.Log.d("DashboardFragment", "Month selected: $year-$month")
+                dashboardViewModel.setSelectedMonth(year, month)
+                updateTimeRangeButton()
+            }
+            setOnResetListener {
+                android.util.Log.d("DashboardFragment", "Resetting to current month")
+                dashboardViewModel.resetDateFilter()
+                updateTimeRangeButton()
+            }
+        }.show(childFragmentManager, MonthYearPickerDialog.TAG)
+    }
+    private fun updateTimeRangeButton() {
+        binding.btnTimeRange.text = dashboardViewModel.getFormattedSelectedDate()
+    }
     private fun setupPieChart() {
         binding.pieChart.apply {
             description.isEnabled = false  // Disable description label
@@ -87,61 +111,67 @@ class DashboardFragment : Fragment() {
     }
 
     private fun observeViewModels() {
+        // Observe loading state first
         viewLifecycleOwner.lifecycleScope.launch {
-            // Observe financial data
+            dashboardViewModel.isLoading.collect { isLoading ->
+                android.util.Log.d("DashboardFragment", "Loading state changed: $isLoading")
+                showLoading(isLoading)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
             financeViewModel.dashboardState.collect { state ->
-                android.util.Log.d("DashboardFragment", "Received dashboard state: balance=${state.balance}, income=${state.totalIncome}, expense=${state.totalExpense}")
+                android.util.Log.d("DashboardFragment",
+                    "Dashboard state update: balance=${state.balance}, income=${state.totalIncome}, expense=${state.totalExpense}")
                 binding.apply {
                     tvBalance.text = currencyFormatter.format(state.balance)
                     tvTotalIncome.text = currencyFormatter.format(state.totalIncome)
                     tvTotalExpenses.text = currencyFormatter.format(state.totalExpense)
                 }
-                dashboardViewModel.refreshData()
+                // No need to refresh data here as it will trigger loading again
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            // Observe pie chart data
             dashboardViewModel.pieChartState.collect { categories ->
-                android.util.Log.d("DashboardFragment", "Received pie chart categories: count=${categories.size}")
-                showLoading(false)
+                android.util.Log.d("DashboardFragment", "Pie chart update: ${categories.size} categories")
                 if (categories.isNotEmpty()) {
-                    android.util.Log.d("DashboardFragment", "Categories are not empty, updating pie chart")
-                    binding.pieChart.visibility = View.VISIBLE
-                    binding.emptyStateText.visibility = View.GONE
-                    updatePieChart(categories)
+                    binding.apply {
+                        emptyStateText.visibility = View.GONE
+                        updatePieChart(categories)
+                    }
                 } else {
-                    android.util.Log.d("DashboardFragment", "No categories available, showing empty state")
-                    binding.pieChart.visibility = View.GONE
-                    binding.emptyStateText.visibility = View.VISIBLE
-                    binding.emptyStateText.text = "No expense data available"
+                    binding.apply {
+                        pieChart.visibility = View.GONE
+                        emptyStateText.visibility = View.VISIBLE
+                        emptyStateText.text = "No transactions found for ${dashboardViewModel.getFormattedSelectedDate()}"
+                    }
                 }
             }
         }
+
+        updateTimeRangeButton()
     }
     private fun showLoading(show: Boolean) {
         binding.apply {
             progressBar.visibility = if (show) View.VISIBLE else View.GONE
             pieChart.visibility = if (show) View.GONE else View.VISIBLE
+            emptyStateText.visibility = View.GONE
         }
     }
 
-
     private fun updatePieChart(categories: List<ExpenseCategoryData>) {
-        if (categories.isEmpty()) return
+        binding.pieChart.visibility = View.VISIBLE
 
-        android.util.Log.d("DashboardFragment", "Updating pie chart with ${categories.size} categories")
         val entries = categories.map { category ->
             val displayName = if (category.category.length > 15) {
                 "${category.category.take(12)}..."
             } else {
                 category.category
             }
-            PieEntry(category.amount.toFloat(), category.category).also {
-                android.util.Log.d(
-                    "DashboardFragment",
-                    "Adding entry: category=${category.category}, amount=${category.amount}"
-                )
+            PieEntry(category.amount.toFloat(), displayName).also {
+                android.util.Log.d("DashboardFragment",
+                    "Adding entry: category=${category.category}, amount=${category.amount}")
             }
         }
         val colors = listOf(

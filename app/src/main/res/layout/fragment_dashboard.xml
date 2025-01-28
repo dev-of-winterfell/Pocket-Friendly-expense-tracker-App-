@@ -162,8 +162,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/this_month"
                         app:icon="@drawable/ic_calander"
-                        app:iconTint="@color/system_primary"
-                        android:textColor="@color/system_primary"
+                        app:iconTint="@color/primary"
+                        android:textColor="@color/primary"
                         style="@style/Widget.Material3.Button.TextButton"/>
                 </LinearLayout>
 
@@ -180,12 +180,16 @@
                             android:layout_height="match_parent"
                            />
 
-                        <ProgressBar
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
                             android:id="@+id/progressBar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:visibility="gone" />
+                            android:indeterminate="true"
+                            app:indicatorColor="@color/primary_light"
+                            app:trackCornerRadius="4dp"
+                            app:indicatorSize="48dp"
+                            android:visibility="gone"/>
 
                         <TextView
                             android:id="@+id/emptyStateText"
@@ -194,7 +198,7 @@
                             android:layout_gravity="center"
                             android:text="No expense data available"
                             android:textSize="16sp"
-                            android:visibility="gone" />
+                            android:visibility="gone"/>
 
                     </FrameLayout>
 
