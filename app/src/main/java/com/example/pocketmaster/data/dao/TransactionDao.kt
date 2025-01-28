@@ -20,6 +20,9 @@ interface TransactionDao {
     @Query("SELECT CAST(SUM(amount) as DOUBLE) FROM transactions WHERE type = :type")
     suspend fun getTotalByType(type: TransactionType): Double?
 
+    @Query("SELECT * FROM transactions")
+    suspend fun getAllTransactionsList(): List<Transaction>
+
     @Query("""
         SELECT 
             category as categoryName,

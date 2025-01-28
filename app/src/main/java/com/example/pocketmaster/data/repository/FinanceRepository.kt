@@ -21,7 +21,9 @@ class FinanceRepository(
 
     fun getCategoriesByType(type: TransactionType) =
         categoryDao.getCategoriesByType(type)
-
+    suspend fun getAllTransactions(): List<Transaction> {
+        return transactionDao.getAllTransactionsList()
+    }
     // In FinanceRepository
     fun getCategoryTotals(type: TransactionType, startDate: Long = 0): Flow<List<CategoryTotal>> =
         categoryDao.getCategoryTotals(type, startDate)

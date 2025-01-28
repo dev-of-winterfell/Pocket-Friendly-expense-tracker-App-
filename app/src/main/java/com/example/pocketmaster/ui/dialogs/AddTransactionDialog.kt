@@ -1,5 +1,7 @@
 package com.example.pocketmaster.ui.dialogs
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.pocketmaster.R
@@ -25,9 +28,21 @@ class AddTransactionDialog:DialogFragment(){
     private val binding  get()=_binding!!
 
 
-    private lateinit var viewModel: FinanceViewModel
+    private val viewModel: FinanceViewModel by viewModels({ requireActivity() })
     private var currentType = TransactionType.EXPENSE
     private var categories = listOf<Category>()
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.apply {
+            setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            // Add window animations
+            setWindowAnimations(R.style.DialogAnimation)
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,7 +56,7 @@ class AddTransactionDialog:DialogFragment(){
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize ViewModel
-        viewModel = ViewModelProvider(requireActivity())[FinanceViewModel::class.java]
+
 
         setupInitialState()
         setupTypeSelection()
@@ -93,7 +108,7 @@ class AddTransactionDialog:DialogFragment(){
         // Update category dropdown with new categories
         val adapter = ArrayAdapter(
             requireContext(),
-            android.R.layout.simple_dropdown_item_1line,
+            R.layout.dropdown_menu,
             categories.map { it.name }
         )
         binding.spinnerCategory.setAdapter(adapter)
@@ -102,7 +117,7 @@ class AddTransactionDialog:DialogFragment(){
         // Initialize category dropdown with empty adapter
         val adapter = ArrayAdapter<String>(
             requireContext(),
-            android.R.layout.simple_dropdown_item_1line,
+            R.layout.dropdown_menu,
             mutableListOf()
         )
         binding.spinnerCategory.setAdapter(adapter)

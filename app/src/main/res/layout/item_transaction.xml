@@ -7,11 +7,14 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/spacing_small"
     android:layout_marginVertical="@dimen/spacing_xsmall"
-    app:cardElevation="0dp"
-    app:strokeWidth="1dp"
-    app:strokeColor="@color/system_outline_variant"
-    app:cardCornerRadius="@dimen/card_corner_radius"
-    style="@style/Widget.Material3.CardView.Outlined">
+    app:cardBackgroundColor="@color/white"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="16dp"
+    app:strokeWidth="0dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:rippleColor="@color/primary_light"
+    style="@style/Widget.Material3.CardView.Elevated">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,55 +23,85 @@
         android:padding="@dimen/spacing_medium"
         android:baselineAligned="false">
 
-        <!-- Left side - Description, Category, Date -->
+        <!-- Category Circle Icon Container -->
+        <FrameLayout
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/circle_category_background"
+            android:layout_gravity="center_vertical"
+            >
+
+            <ImageView
+                android:id="@+id/ivCategoryIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                app:tint="@color/primary_dark"
+               />
+
+        </FrameLayout>
+
+        <!-- Middle Content -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginEnd="@dimen/spacing_medium">
 
             <TextView
                 android:id="@+id/tvDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:maxLines="1"
                 android:ellipsize="end"
                 tools:text="Grocery Shopping"/>
 
-            <TextView
-                android:id="@+id/tvCategory"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xsmall"
-                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                android:alpha="0.8"
-                android:background="@drawable/bg_category_pill"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="2dp"
-                tools:text="Shopping"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
 
-            <TextView
-                android:id="@+id/tvDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xsmall"
-                android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                android:alpha="0.6"
-                tools:text="Today, 2:30 PM"/>
+                <TextView
+                    android:id="@+id/tvCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textAlignment="viewStart"
+
+                    android:paddingVertical="2dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_secondary"
+                    tools:text="Shopping"/>
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    tools:text="Today, 2:30 PM"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <!-- Right side - Amount -->
+        <!-- Amount -->
         <TextView
             android:id="@+id/tvAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/spacing_medium"
-            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            android:textSize="18sp"
+            android:textStyle="bold"
             tools:text="-$24.99"
-            tools:textColor="@color/expense_color"/>
+            tools:textColor="@color/expense_red"/>
 
     </LinearLayout>
 

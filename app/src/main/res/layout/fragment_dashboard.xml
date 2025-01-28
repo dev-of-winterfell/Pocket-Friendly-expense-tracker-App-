@@ -8,21 +8,23 @@
     android:fillViewport="true"
     android:background="@color/system_neutral_background"
     android:clipToPadding="false"
+    android:padding="@dimen/spacing_large"
     android:clipChildren="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/spacing_large">
+     >
 
         <!-- Balance Card -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_large"
-            app:cardElevation="@dimen/elevation_small"
-            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="24dp"
             style="@style/Widget.Material3.CardView.Elevated">
 
             <LinearLayout
@@ -36,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/current_balance"
                     android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                    android:alpha="0.87"/>
+                    android:textColor="@color/md_theme_onPrimaryContainer"/>
 
                 <TextView
                     android:id="@+id/tvBalance"
@@ -44,7 +46,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_small"
                     android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
-                    android:textColor="@color/system_primary"
+                    android:textColor="@color/primary"
+                    android:textStyle="bold"
                     tools:text="$24,562.00"/>
 
                 <com.google.android.material.divider.MaterialDivider
@@ -52,7 +55,8 @@
                     android:layout_height="1dp"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:layout_marginBottom="@dimen/spacing_large"
-                    app:dividerColor="@color/system_outline_variant"/>
+                    app:dividerColor="@color/system_outline_variant"
+                    android:alpha="0.5"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -72,6 +76,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/total_income"
                             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                            android:textColor="@color/md_theme_onPrimaryContainer"
                             android:alpha="0.78"/>
 
                         <TextView
@@ -81,9 +86,8 @@
                             android:layout_marginTop="@dimen/spacing_small"
                             android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                             android:textColor="@color/income_color"
+                            android:textStyle="bold"
                             tools:text="+$32,450.00"/>
-
-
                     </LinearLayout>
 
                     <!-- Vertical Divider -->
@@ -91,7 +95,8 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="@dimen/spacing_large"
-                        android:orientation="vertical"/>
+                        android:orientation="vertical"
+                        android:alpha="0.5"/>
 
                     <!-- Expense Section -->
                     <LinearLayout
@@ -105,6 +110,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/total_expense"
                             android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                            android:textColor="@color/md_theme_onPrimaryContainer"
                             android:alpha="0.78"/>
 
                         <TextView
@@ -114,24 +120,20 @@
                             android:layout_marginTop="@dimen/spacing_small"
                             android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                             android:textColor="@color/expense_color"
+                            android:textStyle="bold"
                             tools:text="-$7,888.00"/>
-
-
-
                     </LinearLayout>
-
                 </LinearLayout>
-
             </LinearLayout>
-
         </com.google.android.material.card.MaterialCardView>
 
         <!-- Expense Breakdown Card -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="@dimen/elevation_small"
-            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="24dp"
             style="@style/Widget.Material3.CardView.Elevated">
 
             <LinearLayout
@@ -151,6 +153,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/expense_breakdown"
+                        android:textColor="@color/md_theme_onSurfaceVariant"
                         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"/>
 
                     <com.google.android.material.button.MaterialButton
@@ -159,20 +162,43 @@
                         android:layout_height="wrap_content"
                         android:text="@string/this_month"
                         app:icon="@drawable/ic_calander"
+                        app:iconTint="@color/system_primary"
+                        android:textColor="@color/system_primary"
                         style="@style/Widget.Material3.Button.TextButton"/>
-
                 </LinearLayout>
 
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/pieChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:layout_marginTop="@dimen/spacing_large"/>
+
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                       >
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pieChart"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                           />
+
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/emptyStateText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="No expense data available"
+                            android:textSize="16sp"
+                            android:visibility="gone" />
+
+                    </FrameLayout>
 
             </LinearLayout>
-
         </com.google.android.material.card.MaterialCardView>
-
     </LinearLayout>
-
 </androidx.core.widget.NestedScrollView>

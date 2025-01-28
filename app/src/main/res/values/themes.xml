@@ -11,4 +11,32 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>  <!-- Makes it perfectly circular -->
     </style>
+    <style name="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu.Dense" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <!-- Adjust the layout size and padding -->
+        <item name="android:minHeight">48dp</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+
+        <!-- Adjust the text size and padding -->
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox.Dense</item>
+        <item name="editTextStyle">@style/Widget.Material3.TextInputEditText.OutlinedBox.Dense</item>
+
+        <!-- Set the proper margins -->
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+
+        <!-- Configure the dropdown menu appearance -->
+        <item name="endIconMode">dropdown_menu</item>
+        <item name="endIconTint">?attr/colorOnSurface</item>
+    </style>
+
+    <!-- Additional supporting styles -->
+    <style name="ThemeOverlay.Material3.TextInputEditText.OutlinedBox.Dense" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
+        <item name="editTextStyle">@style/Widget.Material3.TextInputEditText.OutlinedBox.Dense</item>
+    </style>
+
+    <style name="Widget.Material3.TextInputEditText.OutlinedBox.Dense" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:padding">12dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

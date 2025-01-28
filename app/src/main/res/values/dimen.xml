@@ -25,7 +25,8 @@
     <dimen name="elevation_small">2dp</dimen>
     <dimen name="elevation_medium">4dp</dimen>
     <dimen name="elevation_large">8dp</dimen>
-
+    <dimen name="pie_chart_height">300dp</dimen>
+    <dimen name="pie_chart_width">400dp</dimen>
     <!-- Component specific -->
     <dimen name="toolbar_elevation">4dp</dimen>
 

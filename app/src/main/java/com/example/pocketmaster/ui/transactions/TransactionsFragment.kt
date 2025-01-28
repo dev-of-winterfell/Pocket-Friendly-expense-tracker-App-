@@ -14,6 +14,7 @@ import com.example.pocketmaster.data.model.Transaction
 import com.example.pocketmaster.data.model.TransactionFilter
 import com.example.pocketmaster.data.model.TransactionType
 import com.example.pocketmaster.databinding.FragmentTransactionsBinding
+import com.example.pocketmaster.ui.viewmodel.FinanceViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.launch
 
@@ -21,7 +22,7 @@ class TransactionsFragment : Fragment() {
     private var _binding: FragmentTransactionsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: TransactionsViewModel by viewModels()
+    private val viewModel: FinanceViewModel by viewModels({ requireActivity() })
     private lateinit var transactionAdapter: TransactionAdapter
 
     override fun onCreateView(
@@ -49,6 +50,10 @@ class TransactionsFragment : Fragment() {
             },
             onDeleteClick = { transaction ->
                 viewModel.deleteTransaction(transaction)
+            },
+            onUndoDelete = { transaction ->
+                // Add the transaction back and trigger dashboard update
+                viewModel.addTransaction(transaction)
             }
         )
 
@@ -81,7 +86,7 @@ class TransactionsFragment : Fragment() {
     }
     private fun observeTransactions() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.transactions.collect { transactions ->
+            viewModel.filteredTransactions.collect { transactions ->
                 transactionAdapter.submitList(transactions)
             }
         }

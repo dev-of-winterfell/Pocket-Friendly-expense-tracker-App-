@@ -4,12 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:background="@drawable/dialog_background"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@android:color/transparent"
         android:padding="@dimen/spacing_large"
         android:clipToPadding="false"
         android:clipChildren="false">
@@ -20,12 +22,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_large"
             app:tabMode="fixed"
+            android:backgroundTint="@color/white"
             app:tabGravity="fill"
             app:tabTextAppearance="@style/TextAppearance.Material3.LabelLarge"
-            app:tabSelectedTextColor="@color/system_primary"
-            app:tabIndicatorColor="@color/system_primary"
+            app:tabSelectedTextColor="@color/primary"
+            app:tabIndicatorColor="@color/primary_dark"
             app:tabIndicatorFullWidth="false"
-            app:tabRippleColor="@color/system_primary_container"
+            app:tabRippleColor="@color/primary_light"
             style="@style/Widget.Material3.TabLayout.Secondary">
 
             <com.google.android.material.tabs.TabItem
@@ -46,12 +49,13 @@
             android:layout_marginBottom="@dimen/spacing_large"
             app:cardElevation="0dp"
             app:strokeWidth="1dp"
-            app:strokeColor="@color/system_outline"
+            app:strokeColor="@color/primary_dark"
             style="@style/Widget.Material3.CardView.Elevated">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:orientation="vertical"
                 android:padding="@dimen/spacing_large">
 
@@ -59,9 +63,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/amount"
-
-
-                    app:startIconTint="@color/system_primary"
+                    app:boxStrokeColor="@color/text_input_stroke_color"
+                    app:helperTextTextColor="@color/expense_red"
+                    app:errorTextColor="@color/expense_red"
+                    app:errorIconTint="@color/expense_red"
+                    app:hintTextColor="@color/primary_dark"
+                    app:startIconTint="@color/primary_dark"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -70,6 +77,8 @@
                         android:drawablePadding="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+
+
                         android:inputType="numberDecimal"
                         android:textAppearance="@style/TextAppearance.Material3.BodyLarge"/>
 
@@ -80,6 +89,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_medium"
                     android:hint="@string/description"
+                    app:boxStrokeColor="@color/text_input_stroke_color"
+                    app:helperTextTextColor="@color/expense_red"
+                    app:errorTextColor="@color/expense_red"
+                    app:errorIconTint="@color/expense_red"
+                    app:hintTextColor="@color/primary_dark"
                     app:counterEnabled="true"
                     app:counterMaxLength="100"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
@@ -101,10 +115,17 @@
                     android:layout_marginTop="@dimen/spacing_medium"
                     android:hint="@string/category"
                     app:endIconMode="dropdown_menu"
+                    app:boxStrokeColor="@color/text_input_stroke_color"
+                    app:helperTextTextColor="@color/expense_red"
+                    app:errorTextColor="@color/expense_red"
+                    app:errorIconTint="@color/expense_red"
+                    app:hintTextColor="@color/primary_dark"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                     <AutoCompleteTextView
                         android:id="@+id/spinnerCategory"
+
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
@@ -119,10 +140,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="@dimen/spacing_medium"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -135,6 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/spacing_medium"
+                android:textColor="@color/primary"
                 android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:text="@string/cancel"/>
@@ -143,6 +162,8 @@
                 android:id="@+id/btnSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+           android:backgroundTint="@color/primary"
+                android:textColor="@color/white"
                 android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
                 style="@style/Widget.Material3.Button.TonalButton"
                 android:text="@string/save"/>

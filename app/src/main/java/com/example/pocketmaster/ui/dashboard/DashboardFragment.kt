@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.pocketmaster.R
 import com.example.pocketmaster.data.model.DashboardState
 import com.example.pocketmaster.data.model.ExpenseCategoryData
 import com.example.pocketmaster.databinding.FragmentDashboardBinding
+import com.example.pocketmaster.ui.viewmodel.FinanceViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -25,7 +28,8 @@ class DashboardFragment : Fragment() {
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: DashboardViewModel by viewModels()
+    private val financeViewModel: FinanceViewModel by viewModels({ requireActivity() })
+    private val dashboardViewModel: DashboardViewModel by viewModels()
     private val currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault())
 
     override fun onCreateView(
@@ -40,7 +44,9 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupPieChart()
-        observeDashboardState()
+        // observeDashboardState()
+        observeViewModels()
+        showLoading(true)
     }
 
     private fun setupPieChart() {
@@ -80,32 +86,64 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    private fun observeDashboardState() {
+    private fun observeViewModels() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.dashboardState.collect { state: DashboardState ->
-                updateDashboardUI(state)
+            // Observe financial data
+            financeViewModel.dashboardState.collect { state ->
+                android.util.Log.d("DashboardFragment", "Received dashboard state: balance=${state.balance}, income=${state.totalIncome}, expense=${state.totalExpense}")
+                binding.apply {
+                    tvBalance.text = currencyFormatter.format(state.balance)
+                    tvTotalIncome.text = currencyFormatter.format(state.totalIncome)
+                    tvTotalExpenses.text = currencyFormatter.format(state.totalExpense)
+                }
+                dashboardViewModel.refreshData()
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            // Observe pie chart data
+            dashboardViewModel.pieChartState.collect { categories ->
+                android.util.Log.d("DashboardFragment", "Received pie chart categories: count=${categories.size}")
+                showLoading(false)
+                if (categories.isNotEmpty()) {
+                    android.util.Log.d("DashboardFragment", "Categories are not empty, updating pie chart")
+                    binding.pieChart.visibility = View.VISIBLE
+                    binding.emptyStateText.visibility = View.GONE
+                    updatePieChart(categories)
+                } else {
+                    android.util.Log.d("DashboardFragment", "No categories available, showing empty state")
+                    binding.pieChart.visibility = View.GONE
+                    binding.emptyStateText.visibility = View.VISIBLE
+                    binding.emptyStateText.text = "No expense data available"
+                }
             }
         }
     }
-    private fun updateDashboardUI(state: DashboardState) {
+    private fun showLoading(show: Boolean) {
         binding.apply {
-            // Update summary amounts
-            tvBalance.text = currencyFormatter.format(state.balance)
-            tvTotalIncome.text = currencyFormatter.format(state.totalIncome)
-            tvTotalExpenses.text = currencyFormatter.format(state.totalExpense)
-
-            // Update pie chart
-            updatePieChart(state.expenseCategories)
+            progressBar.visibility = if (show) View.VISIBLE else View.GONE
+            pieChart.visibility = if (show) View.GONE else View.VISIBLE
         }
     }
+
 
     private fun updatePieChart(categories: List<ExpenseCategoryData>) {
         if (categories.isEmpty()) return
 
+        android.util.Log.d("DashboardFragment", "Updating pie chart with ${categories.size} categories")
         val entries = categories.map { category ->
-            PieEntry(category.amount.toFloat(), category.category)
+            val displayName = if (category.category.length > 15) {
+                "${category.category.take(12)}..."
+            } else {
+                category.category
+            }
+            PieEntry(category.amount.toFloat(), category.category).also {
+                android.util.Log.d(
+                    "DashboardFragment",
+                    "Adding entry: category=${category.category}, amount=${category.amount}"
+                )
+            }
         }
-
         val colors = listOf(
             Color.rgb(64, 89, 128),
             Color.rgb(149, 165, 124),
@@ -117,17 +155,32 @@ class DashboardFragment : Fragment() {
             Color.rgb(245, 199, 0)
         )
 
-        val dataSet = PieDataSet(entries, "Expense Categories").apply {
+        val dataSet = PieDataSet(entries, "").apply {
             setColors(colors)
             valueFormatter = PercentFormatter(binding.pieChart)
             valueTextSize = 11f
             valueTextColor = Color.WHITE
             yValuePosition = PieDataSet.ValuePosition.INSIDE_SLICE
+            sliceSpace = 2f  // Add space between slices
+            selectionShift = 5f  // How much slices separate from center when selected
         }
 
-        val pieData = PieData(dataSet)
+        val pieData = PieData(dataSet).apply {
+            setValueFormatter(PercentFormatter())
+            setValueTextSize(11f)
+            setValueTextColor(Color.WHITE)
+        }
         binding.pieChart.apply {
             data = pieData
+            highlightValues(null)
+
+            // Ensure the chart is visible
+            visibility = View.VISIBLE
+
+            // Force a layout pass
+            requestLayout()
+
+            // Refresh the chart
             invalidate()
         }
     }
