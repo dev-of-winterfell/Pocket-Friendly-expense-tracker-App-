@@ -78,14 +78,9 @@ class DashboardFragment : Fragment() {
             description.isEnabled = false  // Disable description label
             isDrawHoleEnabled = true
             setHoleColor(Color.TRANSPARENT)
-
-            // Customize the center hole
-            holeRadius = 58f
-            transparentCircleRadius = 61f
-            setTransparentCircleColor(Color.WHITE)
-            setTransparentCircleAlpha(110)
-
-            // Customize the chart
+            setExtraOffsets(24f, 24f, 24f, 24f)
+            setCenterTextOffset(0f, 0f)
+            holeRadius = 56f
             setUsePercentValues(true)
             setEntryLabelColor(Color.WHITE)
             setEntryLabelTextSize(12f)
@@ -96,17 +91,21 @@ class DashboardFragment : Fragment() {
                 isEnabled = true
                 orientation = Legend.LegendOrientation.VERTICAL
                 horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
-                verticalAlignment = Legend.LegendVerticalAlignment.CENTER
+                verticalAlignment = Legend.LegendVerticalAlignment.TOP
                 setDrawInside(false)
                 xEntrySpace = 10f
                 yEntrySpace = 0f
-                yOffset = 0f
+                // Move up with negative yOffset
+                yOffset = -50f
+                // Move left with negative xOffset
+                xOffset = 10f
                 textSize = 12f
-                formSize = 16f
+                formSize = 12f
+                textColor = Color.WHITE
             }
 
             // Add animation
-            animateY(1400, Easing.EaseInOutQuad)
+            animateY(1400, Easing.EaseInOutCirc)
         }
     }
 
@@ -149,7 +148,26 @@ class DashboardFragment : Fragment() {
                 }
             }
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            dashboardViewModel.monthlyInsights.collect { insights ->
+                binding.apply {
+                    tvTopExpenseCategory.text = insights.topExpenseCategory
+                    tvTopExpenseAmount.text = currencyFormatter.format(insights.topExpenseAmount)
+                    tvDailyAverage.text = currencyFormatter.format(insights.dailyAverageExpense)
+                    tvSavingsRate.text = String.format("%.1f%%", insights.savingsRate)
 
+                    // Set trend color based on value
+                    tvExpenseTrend.apply {
+                        text = String.format("%+.1f%%", insights.expenseTrendPercentage)
+                        setTextColor(when {
+                            insights.expenseTrendPercentage > 0 -> context.getColor(R.color.expense_color)
+                            insights.expenseTrendPercentage < 0 -> context.getColor(R.color.income_color)
+                            else -> context.getColor(R.color.income_color)
+                        })
+                    }
+                }
+            }
+        }
         updateTimeRangeButton()
     }
     private fun showLoading(show: Boolean) {
@@ -175,14 +193,14 @@ class DashboardFragment : Fragment() {
             }
         }
         val colors = listOf(
-            Color.rgb(64, 89, 128),
-            Color.rgb(149, 165, 124),
-            Color.rgb(217, 184, 162),
-            Color.rgb(191, 134, 134),
-            Color.rgb(179, 48, 80),
-            Color.rgb(193, 37, 82),
-            Color.rgb(255, 102, 0),
-            Color.rgb(245, 199, 0)
+            Color.rgb(40, 60, 90),     // Deepened blue
+            Color.rgb(110, 130, 90),   // Muted sage green
+            Color.rgb(180, 140, 120),  // Soft terracotta
+            Color.rgb(160, 100, 100),  // Muted dusty rose
+            Color.rgb(140, 30, 60),    // Deep burgundy
+            Color.rgb(170, 20, 70),    // Rich plum
+            Color.rgb(210, 80, 0),     // Deep burnt orange
+            Color.rgb(200, 160, 0)     // Deep gold
         )
 
         val dataSet = PieDataSet(entries, "").apply {

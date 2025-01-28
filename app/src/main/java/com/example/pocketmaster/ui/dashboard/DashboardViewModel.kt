@@ -1,6 +1,7 @@
 package com.example.pocketmaster.ui.dashboard
 
 import android.app.Application
+import android.graphics.Color
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pocketmaster.data.database.AppDatabase
@@ -8,6 +9,7 @@ import com.example.pocketmaster.data.model.TransactionType
 import com.example.pocketmaster.data.model.CategoryTotal
 import com.example.pocketmaster.data.model.DashboardState
 import com.example.pocketmaster.data.model.ExpenseCategoryData
+import com.example.pocketmaster.data.model.MonthlyInsights
 import com.example.pocketmaster.data.repository.FinanceRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -26,6 +28,105 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
     private val _selectedDate = MutableStateFlow<Pair<Int, Int>?>(null)
     private val _isLoading = MutableStateFlow(true)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
+
+
+
+
+
+
+
+
+
+    private val monthlyInsightsFlow = combine(
+        repository.getCategoryTotals(TransactionType.EXPENSE),
+        repository.getTransactionsByType(TransactionType.EXPENSE),
+        repository.getTransactionsByType(TransactionType.INCOME),
+        _selectedDate
+    ) { categoryTotals, expenses, incomes, selectedDate ->
+        val currentCalendar = Calendar.getInstance()
+        val selectedYear = selectedDate?.first ?: currentCalendar.get(Calendar.YEAR)
+        val selectedMonth = selectedDate?.second ?: currentCalendar.get(Calendar.MONTH)
+
+        // Filter transactions for selected month
+        val monthExpenses = expenses.filter { transaction ->
+            val calendar = Calendar.getInstance().apply {
+                timeInMillis = transaction.date
+            }
+            calendar.get(Calendar.YEAR) == selectedYear &&
+                    calendar.get(Calendar.MONTH) == selectedMonth
+        }
+
+        val monthIncomes = incomes.filter { transaction ->
+            val calendar = Calendar.getInstance().apply {
+                timeInMillis = transaction.date
+            }
+            calendar.get(Calendar.YEAR) == selectedYear &&
+                    calendar.get(Calendar.MONTH) == selectedMonth
+        }
+
+        // Calculate insights
+        val topExpense = categoryTotals.maxByOrNull { it.total }
+        val totalMonthExpense = monthExpenses.sumOf { it.amount }
+        val totalMonthIncome = monthIncomes.sumOf { it.amount }
+
+        // Get days in month
+        val calendar = Calendar.getInstance().apply {
+            set(selectedYear, selectedMonth, 1)
+        }
+        val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+        // Calculate daily average
+        val dailyAverage = totalMonthExpense / daysInMonth
+
+        // Calculate savings rate
+        val savingsRate = if (totalMonthIncome > 0) {
+            ((totalMonthIncome - totalMonthExpense) / totalMonthIncome) * 100
+        } else 0.0
+
+        // Calculate expense trend
+        val lastMonthExpenses = expenses.filter { transaction ->
+            val cal = Calendar.getInstance().apply {
+                timeInMillis = transaction.date
+            }
+            if (selectedMonth == 0) {
+                cal.get(Calendar.YEAR) == selectedYear - 1 &&
+                        cal.get(Calendar.MONTH) == 11
+            } else {
+                cal.get(Calendar.YEAR) == selectedYear &&
+                        cal.get(Calendar.MONTH) == selectedMonth - 1
+            }
+        }.sumOf { it.amount }
+
+        val expenseTrend = if (lastMonthExpenses > 0) {
+            ((totalMonthExpense - lastMonthExpenses) / lastMonthExpenses) * 100
+        } else 0.0
+
+        MonthlyInsights(
+            topExpenseCategory = topExpense?.name ?: "",
+            topExpenseAmount = topExpense?.total ?: 0.0,
+            dailyAverageExpense = dailyAverage,
+            savingsRate = savingsRate,
+            expenseTrendPercentage = expenseTrend,
+
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = MonthlyInsights()
+    )
+
+    // Expose the insights
+    val monthlyInsights: StateFlow<MonthlyInsights> = monthlyInsightsFlow
+
+
+
+
+
+
+
+
+
 
     private val expenseCategoriesFlow = combine(
         repository.getCategoryTotals(TransactionType.EXPENSE),
@@ -116,12 +217,6 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
         } ?: "Current Month"
     }
 
-    fun refreshData() {
-        viewModelScope.launch {
-            _isLoading.value = true
-            _updateTrigger.emit(Unit)
-        }
-    }
 
     init {
         viewModelScope.launch {

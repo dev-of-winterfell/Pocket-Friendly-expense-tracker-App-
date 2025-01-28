@@ -92,8 +92,8 @@ class TransactionAdapter(
                 tvAmount.setTextColor(
                     tvAmount.context.getColor(
                         when (transaction.type) {
-                            TransactionType.INCOME -> android.R.color.holo_green_dark
-                            TransactionType.EXPENSE -> android.R.color.holo_red_dark
+                            TransactionType.INCOME -> R.color.income_green
+                            TransactionType.EXPENSE ->R.color.expense_red
                         }
                     )
                 )

@@ -45,10 +45,10 @@ class MainActivity : AppCompatActivity() {
         binding.viewPager.adapter = adapter
         binding.viewPager.registerOnPageChangeCallback(pageChangeCallback)
         binding.tabLayout.apply {
-            setSelectedTabIndicatorColor(getColor(R.color.primary))
+            setSelectedTabIndicatorColor(getColor(R.color.white))
             setTabTextColors(
-                getColor(R.color.black), // Unselected color
-                getColor(R.color.primary)  // Selected color
+                getColor(R.color.divider1), // Unselected color
+                getColor(R.color.white)  // Selected color
             )
 
             // Optional: Custom indicator animation

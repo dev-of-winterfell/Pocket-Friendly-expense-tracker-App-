@@ -1,67 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
+    android:padding="16dp"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@drawable/outline_button">
 
+    <!-- Title -->
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:text="Select Month"
         android:textAlignment="center"
-        android:textColor="@color/primary"
+        android:textStyle="bold"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/white"
         android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="4dp"
+        android:importantForAccessibility="yes"
+        android:contentDescription="Dialog title: Select Month"/>
 
+    <!-- Date Picker -->
     <DatePicker
         android:id="@+id/datePicker"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
-        android:datePickerMode="spinner"/>
+        android:datePickerMode="spinner"
+        android:theme="@style/ThemeOverlay.Material3.DatePicker"
+        android:importantForAccessibility="yes"
+        android:contentDescription="Select month and year"/>
 
+    <!-- Action Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="end"
-        android:layout_marginTop="16dp">
+        android:layout_gravity="center"
+      >
 
+        <!-- Reset Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnReset"
+            android:layout_marginRight="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Reset"
-            android:backgroundTint="@color/expense_red"
-            android:textColor="@color/white"
-            style="@style/Widget.Material3.Button.TextButton"/>
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:textColor="@color/expense_red"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:contentDescription="Reset date selection"/>
 
+
+<Space
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="1"/>
+        <!-- Cancel Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel"
-            android:textColor="@color/primary"
-            style="@style/Widget.Material3.Button.TextButton"/>
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:textColor="@color/white"
+            android:layout_marginRight="4dp"
 
+        android:contentDescription="Cancel and close dialog"
+        />
+
+
+        <!-- OK Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnOk"
+            style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
+
+            android:contentDescription="Confirm selection"
             android:text="OK"
-            android:backgroundTint="@color/primary"
             android:textColor="@color/white"
-            android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-            style="@style/Widget.Material3.Button.TonalButton"
-            android:layout_marginStart="8dp"/>
+            app:backgroundTint="@color/primary" />
     </LinearLayout>
 </LinearLayout>

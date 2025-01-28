@@ -22,12 +22,12 @@
 
     <!-- Dashboard strings -->
 
-    <string name="total_expenses">Total Expenses</string>
-    <string name="monthly_overview">Monthly Overview</string>
-    <string name="expense_breakdown">Expense Breakdown</string>
-    <string name="current_balance">Current Balance</string>
-    <string name="total_income">Total Income</string>
-    <string name="total_expense">Total Expense</string>
+    <string name="total_expenses">Total Expenses :</string>
+    <string name="monthly_overview">Monthly Overview :</string>
+    <string name="expense_breakdown">Expense Breakdown :</string>
+    <string name="current_balance">Current Balance :</string>
+    <string name="total_income">Total Income :</string>
+    <string name="total_expense">Total Expense :</string>
 
     <!-- Transaction related strings -->
 

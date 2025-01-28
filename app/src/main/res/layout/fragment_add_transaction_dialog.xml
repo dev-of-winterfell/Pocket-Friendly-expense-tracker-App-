@@ -3,8 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/dialog_background"
+    android:layout_margin="16dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/outline_button"
+
+
     >
 
     <LinearLayout
@@ -22,13 +25,15 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_large"
             app:tabMode="fixed"
-            android:backgroundTint="@color/white"
+            android:padding="4dp"
+            android:background="@drawable/tab_layout_border"
+
             app:tabGravity="fill"
             app:tabTextAppearance="@style/TextAppearance.Material3.LabelLarge"
-            app:tabSelectedTextColor="@color/primary"
-            app:tabIndicatorColor="@color/primary_dark"
+            app:tabSelectedTextColor="@color/white"
+            app:tabIndicatorColor="@color/divider"
             app:tabIndicatorFullWidth="false"
-            app:tabRippleColor="@color/primary_light"
+            app:tabRippleColor="@color/white"
             style="@style/Widget.Material3.TabLayout.Secondary">
 
             <com.google.android.material.tabs.TabItem
@@ -48,33 +53,41 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_large"
             app:cardElevation="0dp"
+            android:background="@color/transparent"
+            android:backgroundTint="@color/transparent"
             app:strokeWidth="1dp"
-            app:strokeColor="@color/primary_dark"
+            app:strokeColor="@color/white"
             style="@style/Widget.Material3.CardView.Elevated">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="@color/transparent"
+                android:backgroundTint="@color/transparent"
                 android:orientation="vertical"
-                android:padding="@dimen/spacing_large">
+                android:padding="@dimen/spacing_medium">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/amount"
-                    app:boxStrokeColor="@color/text_input_stroke_color"
+
+
+                    app:boxStrokeColor="@color/white"
                     app:helperTextTextColor="@color/expense_red"
                     app:errorTextColor="@color/expense_red"
                     app:errorIconTint="@color/expense_red"
-                    app:hintTextColor="@color/primary_dark"
-                    app:startIconTint="@color/primary_dark"
+
+                    app:startIconTint="@color/white"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etAmount"
+                        android:hint="@string/amount"
+                        android:textColorHint="@color/white"
+                        android:textColor="@color/white"
                         android:drawableStart="@drawable/ic_currency"
                         android:drawablePadding="8dp"
+                        android:drawableTint="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
@@ -89,11 +102,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_medium"
                     android:hint="@string/description"
-                    app:boxStrokeColor="@color/text_input_stroke_color"
+                    app:boxStrokeColor="@color/white"
                     app:helperTextTextColor="@color/expense_red"
                     app:errorTextColor="@color/expense_red"
                     app:errorIconTint="@color/expense_red"
-                    app:hintTextColor="@color/primary_dark"
+                    app:hintTextColor="@color/white"
                     app:counterEnabled="true"
                     app:counterMaxLength="100"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
@@ -101,6 +114,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etDescription"
                         android:layout_width="match_parent"
+                        app:hintTextColor="@color/white"
+                        android:textColor="@color/white"
                         android:layout_height="wrap_content"
                         android:inputType="textMultiLine"
                         android:minLines="2"
@@ -113,19 +128,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_medium"
-                    android:hint="@string/category"
+
                     app:endIconMode="dropdown_menu"
-                    app:boxStrokeColor="@color/text_input_stroke_color"
+                    app:boxStrokeColor="@color/white"
                     app:helperTextTextColor="@color/expense_red"
                     app:errorTextColor="@color/expense_red"
                     app:errorIconTint="@color/expense_red"
-                    app:hintTextColor="@color/primary_dark"
+
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                     <AutoCompleteTextView
                         android:id="@+id/spinnerCategory"
-
-
+                        android:hint="@string/category"
+                        android:textColorHint="@color/white"
+                        android:textColor="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
@@ -153,9 +169,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/spacing_medium"
-                android:textColor="@color/primary"
+                android:textColor="@color/white"
+
                 android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-                style="@style/Widget.Material3.Button.TextButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:text="@string/cancel"/>
 
             <com.google.android.material.button.MaterialButton

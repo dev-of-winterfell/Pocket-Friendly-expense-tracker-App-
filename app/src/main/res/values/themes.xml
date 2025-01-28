@@ -39,4 +39,18 @@
         <item name="android:padding">12dp</item>
         <item name="android:textSize">14sp</item>
     </style>
+    <!-- Define custom theme overlay for DatePicker -->
+    <style name="ThemeOverlay.Material3.DatePicker" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize text appearance (optional) -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/divider</item>
+
+        <!-- Customize background color (optional) -->
+        <item name="android:background">@color/transparent</item>
+
+
+        <!-- Customize date range and other styles (optional) -->
+
+
+    </style>
 </resources>

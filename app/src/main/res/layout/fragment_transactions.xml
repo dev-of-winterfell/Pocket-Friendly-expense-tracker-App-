@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/system_neutral_background">
+    android:background="@drawable/outline_button">
 
 
 
@@ -18,16 +18,17 @@
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@color/primary_dark"
+        app:tabIndicatorColor="@color/white"
         app:tabIndicatorFullWidth="false"
         app:tabMode="fixed"
-        app:tabRippleColor="@color/primary_light"
-        app:tabSelectedTextColor="@color/primary"
+        app:tabRippleColor="@color/expense_red"
+        app:tabSelectedTextColor="@color/white"
+
         app:tabTextAppearance="@style/TextAppearance.Material3.LabelLarge">
 
         <com.google.android.material.tabs.TabItem
