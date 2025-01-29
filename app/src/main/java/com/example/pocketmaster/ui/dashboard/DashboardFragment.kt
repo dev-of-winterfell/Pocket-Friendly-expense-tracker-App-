@@ -193,14 +193,15 @@ class DashboardFragment : Fragment() {
             }
         }
         val colors = listOf(
-            Color.rgb(40, 60, 90),     // Deepened blue
-            Color.rgb(110, 130, 90),   // Muted sage green
-            Color.rgb(180, 140, 120),  // Soft terracotta
-            Color.rgb(160, 100, 100),  // Muted dusty rose
-            Color.rgb(140, 30, 60),    // Deep burgundy
-            Color.rgb(170, 20, 70),    // Rich plum
-            Color.rgb(210, 80, 0),     // Deep burnt orange
-            Color.rgb(200, 160, 0)     // Deep gold
+            // Original -> Vibrant version
+            Color.rgb(45, 85, 155)  ,   // Royal blue: Increased saturation and lightness while keeping the blue dominant
+         Color.rgb(130, 180, 65) ,   // Fresh lime green: Boosted green channel and reduced red for more punch
+         Color.rgb(235, 125, 90) ,   // Coral: Amplified red and reduced other channels for more energy
+         Color.rgb(235, 95, 125)  ,  // Hot pink: Increased red and added more blue for vibrancy
+       Color.rgb(190, 25, 85),     // Magenta: Boosted red while keeping blue-bias for richness
+         Color.rgb(215, 15, 95)  ,   // Deep rose: Increased contrast between channels
+         Color.rgb(255, 95, 0),      // Pure orange: Maximized red and adjusted yellow component
+      Color.rgb(255, 195, 0)     // Golden yellow: Pushed both red and green channels higher  // Deep gold
         )
 
         val dataSet = PieDataSet(entries, "").apply {

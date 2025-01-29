@@ -5,16 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/spacing_small"
-    android:layout_marginVertical="@dimen/spacing_xsmall"
-    app:cardBackgroundColor="@color/translucent"
-    app:cardElevation="2dp"
-    app:cardCornerRadius="16dp"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="@dimen/spacing_medium"
     app:strokeWidth="0dp"
+
+    app:cardBackgroundColor="@color/translucent"
+    app:cardCornerRadius="24dp"
+
     android:clickable="true"
     android:focusable="true"
-    app:rippleColor="@color/expense_red"
-    style="@style/Widget.Material3.CardView.Elevated">
+    app:rippleColor="@color/chart_color_3"
+  >
 
     <LinearLayout
         android:layout_width="match_parent"

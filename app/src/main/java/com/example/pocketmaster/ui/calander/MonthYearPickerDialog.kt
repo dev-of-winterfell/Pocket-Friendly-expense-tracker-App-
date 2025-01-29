@@ -1,9 +1,12 @@
 package com.example.pocketmaster.ui.calander
 
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.DatePicker
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
@@ -13,6 +16,17 @@ import com.example.pocketmaster.databinding.FragmentMonthYearPickerDialogBinding
 import java.util.Calendar
 
 class MonthYearPickerDialog : DialogFragment() {
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.apply {
+            // Set a fixed width in pixels (convert dp to pixels)
+            val width = (280 * resources.displayMetrics.density).toInt()
+            setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setWindowAnimations(R.style.DialogAnimation)
+        }
+    }
+
     private var _binding: FragmentMonthYearPickerDialogBinding? = null
     private val binding get() = _binding!!
 
@@ -29,6 +43,7 @@ class MonthYearPickerDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = FragmentMonthYearPickerDialogBinding.inflate(LayoutInflater.from(context))
+
 
         val calendar = Calendar.getInstance()
 
@@ -61,9 +76,10 @@ class MonthYearPickerDialog : DialogFragment() {
             dismiss()
         }
 
-        return AlertDialog.Builder(requireContext())
-            .setView(binding.root)
-            .create()
+        return Dialog(requireContext()).apply {
+            setContentView(binding.root)
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        }
     }
 
     override fun onDestroyView() {

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:padding="16dp"
+    android:layout_width="280dp"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
+
+    android:layout_gravity="center"
     android:orientation="vertical"
-    android:background="@drawable/outline_button">
+    android:background="@drawable/dialog_background"
+  >
 
     <!-- Title -->
     <com.google.android.material.textview.MaterialTextView
@@ -34,6 +33,7 @@
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
+        android:background="@drawable/tab_layout_border"
         android:datePickerMode="spinner"
         android:theme="@style/ThemeOverlay.Material3.DatePicker"
         android:importantForAccessibility="yes"
@@ -41,42 +41,34 @@
 
     <!-- Action Buttons -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginTop="4dp"
         android:layout_gravity="center"
-      >
+        android:padding="4dp"
+        android:orientation="horizontal">
 
         <!-- Reset Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnReset"
-            android:layout_marginRight="4dp"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="Reset date selection"
             android:text="Reset"
-
-            android:textColor="@color/expense_red"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:contentDescription="Reset date selection"/>
+            android:textColor="@color/expense_red" />
 
 
-<Space
-    android:layout_width="0dp"
-    android:layout_height="match_parent"
-    android:layout_weight="1"/>
         <!-- Cancel Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancel"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Cancel and close dialog"
             android:text="Cancel"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:textColor="@color/white"
-            android:layout_marginRight="4dp"
-
-        android:contentDescription="Cancel and close dialog"
-        />
-
+            android:textColor="@color/white" />
 
         <!-- OK Button -->
         <com.google.android.material.button.MaterialButton
@@ -84,11 +76,9 @@
             style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-
             android:contentDescription="Confirm selection"
             android:text="OK"
             android:textColor="@color/white"
-            app:backgroundTint="@color/primary" />
+            app:backgroundTint="#FFB800" />
     </LinearLayout>
 </LinearLayout>

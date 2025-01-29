@@ -14,7 +14,7 @@
     <!-- Chart colors -->
     <color name="chart_color_1">#2196F3</color>    <!-- Blue -->
     <color name="chart_color_2">#4CAF50</color>    <!-- Green -->
-    <color name="chart_color_3">#FFC107</color>    <!-- Amber -->
+    <color name="chart_color_3">#FFB800</color>    <!-- Amber -->
     <color name="chart_color_4">#9C27B0</color>    <!-- Purple -->
     <color name="chart_color_5">#FF5722</color>    <!-- Deep Orange -->
 
@@ -53,7 +53,7 @@
     <color name="expense_color">#CF222E</color>
     <!-- Transaction colors -->
     <color name="income_color">#1B873A</color>
-    <color name="translucent">#39FFFFFF</color>
+    <color name="translucent">#33FFFFFF</color>
 
     <!-- Chart colors -->
     <color name="chart_food">#FF6B6B</color>

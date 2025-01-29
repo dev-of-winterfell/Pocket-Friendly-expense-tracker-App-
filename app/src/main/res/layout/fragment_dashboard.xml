@@ -21,11 +21,12 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            app:cardElevation="4dp"
             app:cardBackgroundColor="@color/translucent"
             app:cardCornerRadius="24dp"
-            style="@style/Widget.Material3.CardView.Elevated">
+            app:cardElevation="0dp"
+
+        app:strokeWidth="0dp"
+        app:rippleColor="@color/translucent"         >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -135,11 +136,15 @@ android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_large"
-            app:cardElevation="4dp"
+
             app:cardBackgroundColor="@color/translucent"
-            android:layout_marginBottom="16dp"
             app:cardCornerRadius="24dp"
-            style="@style/Widget.Material3.CardView.Elevated">
+            app:cardElevation="0dp"
+
+
+            app:strokeWidth="0dp"
+            app:rippleColor="@color/translucent"
+           >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -201,6 +206,7 @@ android:gravity="center"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:orientation="vertical"
+                        android:gravity=""
                         android:padding="8dp">
 
                         <TextView
@@ -217,8 +223,14 @@ android:gravity="center"
                             android:layout_height="wrap_content"
                             android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                             android:textColor="@color/primary_light"
-                            tools:text="$35.00"/>
+                            tools:text="$35.00" />
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_columnSpan="2"
+                        android:background="#1FFFFFFF"/>
 
                     <!-- Savings Rate -->
                     <LinearLayout
@@ -278,17 +290,20 @@ android:gravity="center"
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="4dp"
-
             app:cardBackgroundColor="@color/translucent"
             app:cardCornerRadius="24dp"
-            style="@style/Widget.Material3.CardView.Elevated">
+            app:cardElevation="0dp"
+           android:layout_marginTop="16dp"
+            app:contentPadding="16dp"
+            app:strokeWidth="0dp"
+            app:rippleColor="@color/translucent"
+    >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/spacing_large">
+              >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -312,7 +327,7 @@ android:gravity="center"
                         android:text="@string/this_month"
                         app:icon="@drawable/ic_calander"
                         app:iconTint="@color/white"
-                        app:rippleColor="@color/expense_red"
+                        app:rippleColor="@color/chart_color_3"
                         android:textColor="@color/white"
                         style="@style/Widget.Material3.Button.OutlinedButton"/>
                 </LinearLayout>
@@ -346,6 +361,7 @@ android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:textColor="@color/white"
                             android:text="No expense data available"
                             android:textSize="16sp"
                             android:visibility="gone"/>

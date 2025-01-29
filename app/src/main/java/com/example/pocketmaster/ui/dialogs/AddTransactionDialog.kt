@@ -34,12 +34,10 @@ class AddTransactionDialog:DialogFragment(){
     override fun onStart() {
         super.onStart()
         dialog?.window?.apply {
-            setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
+            // Convert 350dp to pixels
+            val width = (350 * resources.displayMetrics.density).toInt()
+            setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            // Add window animations
             setWindowAnimations(R.style.DialogAnimation)
         }
     }
